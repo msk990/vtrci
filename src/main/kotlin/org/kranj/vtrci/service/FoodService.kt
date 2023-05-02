@@ -1,9 +1,10 @@
 package org.kranj.vtrci.service
 
 import org.kranj.vtrci.dtos.FoodDto
-import org.kranj.vtrci.dtos.ItemDto
 import org.kranj.vtrci.dtos.NewFoodDto
 import org.kranj.vtrci.model.Food
+import org.kranj.vtrci.repository.ArtRepository
+import org.kranj.vtrci.repository.FrontArtRepository
 import org.kranj.vtrci.repository.FoodRepository
 import org.kranj.vtrci.transformer.AddFoodTransformer
 import org.kranj.vtrci.transformer.FoodPageableTransformer
@@ -19,8 +20,9 @@ import java.util.UUID
 
 @Service
 class FoodService (val repository:FoodRepository,
-                    private val addFoodTransformer: AddFoodTransformer,
-private val foodPageableTransformer: FoodPageableTransformer
+                   private val addFoodTransformer: AddFoodTransformer,
+                   val artRepository: ArtRepository,
+                   private val foodPageableTransformer: FoodPageableTransformer
                    ) {
 //    fun getAll(): List<Food> = repository.findAll()
     fun getAll(): List<FoodDto> = repository.findAll().map(Food::toFoodDto)
@@ -39,7 +41,7 @@ private val foodPageableTransformer: FoodPageableTransformer
       return  foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
   }
 
-    fun create(food: NewFoodDto): Food = repository.save(addFoodTransformer.transform(food))
+    fun create(food: NewFoodDto): FoodDto = repository.save(addFoodTransformer.transform(food)).toFoodDto()
 
     fun remove(id: UUID) {
         if (repository.existsById(id)) repository.deleteById(id)
@@ -51,5 +53,95 @@ private val foodPageableTransformer: FoodPageableTransformer
             food.id = id
             repository.save(food.toFood())
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
+    }
+
+    fun addArt(artId: UUID, foodId: UUID):Food {
+        val food = repository.getReferenceById(foodId)
+        val art = artRepository.getReferenceById(artId)
+        val newFood = Food(
+            food.id,
+            food.foodName,
+            food.foodNameSl,
+            food.gen,
+            food.processing,
+            food.portionSize,
+            food.energyKj,
+            food.energyKcal,
+            food.protein,
+            food.carbs,
+            food.sugars,
+            food.dietaryFibre,
+            food.fat,
+            food.saturated,
+            food.ca,
+            food.fe,
+            food.mg,
+            food.k,
+            food.na,
+            food.zn,
+            food.carotenoide,
+            food.retinol,
+            food.thiamin,
+            food.riboflavin,
+            food.niacin,
+            food.b6,
+            food.b12,
+            food.folate,
+            food.vitaminC,
+            food.vitaminD,
+            food.vitaminE,
+            food.ingredients,
+            food.images,
+            art,
+            food.stages,
+            food.tag
+        )
+       return repository.save(newFood)
+
+    }
+
+    fun removeArt(foodId: UUID):Food {
+        val food = repository.getReferenceById(foodId)
+
+        val newFood = Food(
+            food.id,
+            food.foodName,
+            food.foodNameSl,
+            food.gen,
+            food.processing,
+            food.portionSize,
+            food.energyKj,
+            food.energyKcal,
+            food.protein,
+            food.carbs,
+            food.sugars,
+            food.dietaryFibre,
+            food.fat,
+            food.saturated,
+            food.ca,
+            food.fe,
+            food.mg,
+            food.k,
+            food.na,
+            food.zn,
+            food.carotenoide,
+            food.retinol,
+            food.thiamin,
+            food.riboflavin,
+            food.niacin,
+            food.b6,
+            food.b12,
+            food.folate,
+            food.vitaminC,
+            food.vitaminD,
+            food.vitaminE,
+            food.ingredients,
+            food.images,
+            null,
+            food.stages,
+            food.tag
+        )
+        return repository.save(newFood)
+
     }
 }

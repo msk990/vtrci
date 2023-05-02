@@ -11,9 +11,10 @@ import java.util.*
 @Repository
 
 interface ItemsRepository : JpaRepository<Item, UUID> {
-    fun findByItemNameContainingIgnoreCase(name: String, pageable: Pageable): Page<Item?>
+    fun findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCase(name: String, content:String, pageable: Pageable): Page<Item>
 
-    fun findByItemNameContainingIgnoreCaseAndTagIdEquals(itemName: String, tagId: UUID?, pageable: Pageable): Page<Item>
+    fun findByTagIdEquals(tag:UUID?, pageable: Pageable):Page<Item>
+    fun findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCaseAndTagIdEquals(itemName: String, content:String, tagId: UUID?, pageable: Pageable): Page<Item>
 
 
    // @Query("SELECT i, t FROM Item i JOIN Tag t WHERE i.itemName like %:txt% AND (t.tag in :tags OR i.tag IS EMPTY)")

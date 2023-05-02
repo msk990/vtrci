@@ -7,5 +7,5 @@ RUN gradle build --stacktrace
 FROM openjdk:17-alpine3.12
 WORKDIR /app
 EXPOSE 8080
-COPY --from=builder /builder/build/libs/server.jar .
+COPY --from=builder /builder/build/libs/vtrci-0.0.1-SNAPSHOT.jar server.jar
 CMD ["java", "-jar", "server.jar"]

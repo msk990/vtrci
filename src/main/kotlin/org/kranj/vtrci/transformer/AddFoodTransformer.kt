@@ -5,6 +5,7 @@ import org.kranj.vtrci.dtos.NewFoodDto
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.model.Ingredient
 import org.kranj.vtrci.model.Item
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -17,6 +18,7 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
             foodNameSl = source.foodNameSl,
             gen = source.gen,
             processing = source.processing,
+            portionSize = source.portionSize,
             energyKj = source.macroNutrients.energyKj,
             energyKcal = source.macroNutrients.energyKcal,
             protein = source.macroNutrients.protein,
@@ -82,9 +84,13 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
 
                 )
             }.toMutableSet(),
+            images=source.images?.toMutableSet(),
+            stages=source.stages?.toMutableSet(),
+            art=source.art,
             tag = source.tag?.toSet()
 
 
         )
     }
+
 }

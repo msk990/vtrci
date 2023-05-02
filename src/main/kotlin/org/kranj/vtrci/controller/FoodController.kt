@@ -29,20 +29,25 @@ class FoodController (val service: FoodService) {
     @GetMapping("/{id}")
     fun getFood(@PathVariable id: UUID) = service.getById(id)
 
+
     @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun saveFood(@RequestBody food:NewFoodDto) : Food = service.create(food)
+    @ResponseBody()
+    fun saveFood(@RequestBody food:NewFoodDto) : FoodDto = service.create(food)
 
 //    @CrossOrigin
 //    @PostMapping
 //    @ResponseStatus(HttpStatus.CREATED)
 //    fun saveFood(@RequestBody food:Food) : Food = service.create(food)
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     fun deleteFood(@PathVariable id: UUID) = service.remove(id)
 
+    @CrossOrigin
     @PutMapping("/{id}")
     fun updateFood(@PathVariable id: UUID, @RequestBody food:FoodDto) = service.update(id, food)
+
 
 }

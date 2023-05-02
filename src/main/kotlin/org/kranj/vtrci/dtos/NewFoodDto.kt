@@ -1,7 +1,6 @@
 package org.kranj.vtrci.dtos
 
-import org.kranj.vtrci.model.Ingredient
-import org.kranj.vtrci.model.Tag
+import org.kranj.vtrci.model.*
 import java.util.*
 
 
@@ -10,10 +9,14 @@ data class NewFoodDto (
     val foodNameSl: String,
     val gen: Boolean,
     val processing: String,
+    val portionSize: Double,
     val macroNutrients: MacroNutrients,
     val microNutrients: MicroNutrients,
     val ingredients: MutableSet<IngredientDto>,
-    val tag: Set<Tag>?
+    val images: MutableSet<FoodImage>?,
+    val stages: MutableSet<FoodStage>?,
+    val art: Art?,
+    val tag: Set<MealTags>?
         )
 
 data class FoodDto (
@@ -22,10 +25,14 @@ data class FoodDto (
     val foodNameSl: String,
     val gen: Boolean,
     val processing: String,
+    val portionSize: Double,
     val macroNutrients: MacroNutrients,
     val microNutrients: MicroNutrients,
     val ingredients: MutableSet<Ingredient>?,
-    val tag: Set<Tag>?
+    val images: MutableSet<FoodImage>?,
+    val stages: MutableSet<FoodStage>?,
+    val art: Art?,
+    val tag: Set<MealTags>?
 )
 
 data class IngredientDto (

@@ -18,6 +18,7 @@ fun Food.toFoodDto() : FoodDto {
         foodNameSl = this.foodNameSl,
         gen = this.gen,
         processing = this.processing,
+        portionSize = this.portionSize,
         macroNutrients = MacroNutrients(
             energyKj = this.energyKj,
             energyKcal = this.energyKcal,
@@ -49,6 +50,9 @@ fun Food.toFoodDto() : FoodDto {
             vitaminE = this.vitaminE,
         ),
         ingredients = this?.ingredients?.toMutableSet(),
+        images = this?.images?.toMutableSet(),
+        stages = this?.stages?.toMutableSet(),
+        art = this?.art,
         tag = this.tag?.toSet()
 
     )
@@ -62,6 +66,7 @@ fun FoodDto.toFood(): Food {
         foodNameSl = this.foodNameSl,
         gen = this.gen,
         processing = this.processing,
+        portionSize = this.portionSize,
 
         energyKj = this.macroNutrients.energyKj,
         energyKcal = this.macroNutrients.energyKcal,
@@ -91,6 +96,9 @@ fun FoodDto.toFood(): Food {
         vitaminE = this.microNutrients.vitaminE,
 
         ingredients = this?.ingredients?.toMutableSet(),
+        images = this?.images?.toMutableSet(),
+        stages = this?.stages?.toMutableSet(),
+        art = this?.art,
         tag = this.tag?.toSet()
         )
 }

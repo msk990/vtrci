@@ -22,8 +22,9 @@ fun Meal.toMealDto() : MealDto {
     }
     var endd: Instant = when(ldt){
         7 -> this.start.plus(2, ChronoUnit.HOURS)
-        9 -> this.start.plus(2, ChronoUnit.HOURS)
-        11 -> this.start.plus(3, ChronoUnit.HOURS)
+        9 -> this.start.plus(3, ChronoUnit.HOURS)
+        8 -> this.start.plus(3, ChronoUnit.HOURS)
+        10 -> this.start.plus(3, ChronoUnit.HOURS)
         14 -> this.start.plus(2, ChronoUnit.HOURS)
         else -> this.start.plus(2, ChronoUnit.HOURS)
     }

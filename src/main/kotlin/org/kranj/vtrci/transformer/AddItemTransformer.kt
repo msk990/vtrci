@@ -2,6 +2,7 @@ package org.kranj.vtrci.transformer
 
 import org.kranj.vtrci.dtos.NewItemDto
 import org.kranj.vtrci.model.Item
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Component
 import java.util.*
 

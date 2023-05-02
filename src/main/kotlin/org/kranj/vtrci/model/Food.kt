@@ -23,6 +23,9 @@ data class Food(
     @Column(name = "food_processing")
     val processing: String,
 
+    @Column(name = "portionSize")
+    val portionSize: Double,
+
     @Column(name = "energy_kj")
     val energyKj: Double,
 
@@ -102,8 +105,18 @@ data class Food(
     @OneToMany(cascade = [CascadeType.ALL])
     val ingredients: Set<Ingredient>?,
 
+
+    @OneToMany (cascade = [CascadeType.ALL])
+    val images: Set<FoodImage>?,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    val art: Art?,
+
+    @OneToMany (cascade = [CascadeType.ALL])
+    val stages: Set<FoodStage>?,
+
     @ManyToMany(cascade = [CascadeType.PERSIST])
-    val tag: Set<Tag>?
+    val tag: Set<MealTags>?
 
     ) {
 //

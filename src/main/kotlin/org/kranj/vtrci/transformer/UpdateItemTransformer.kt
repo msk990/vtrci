@@ -3,11 +3,12 @@ package org.kranj.vtrci.transformer
 import org.kranj.vtrci.dtos.ItemDto
 import org.kranj.vtrci.dtos.NewItemDto
 import org.kranj.vtrci.model.Item
+import org.springframework.data.domain.Page
 import java.util.*
 
 class UpdateItemTransformer: Transformer<ItemDto, Item> {
 
-    override fun transform(source:ItemDto): Item {
+    override fun transform(source: ItemDto): Item {
         return Item (
             id= source.id,
             itemName = source.itemName,

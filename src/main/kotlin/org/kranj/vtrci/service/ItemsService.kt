@@ -22,18 +22,18 @@ private val addItemTransformer: AddItemTransformer,
 private val itemPageableTransformer: ItemPageableTransformer){
     fun getAll(pageable: Pageable): Page<Item> = repository.findAll(pageable)
 
-    fun getByName(name: String, pageable: Pageable): Page<Item?> = repository.findByItemNameContainingIgnoreCase(name, pageable)
+    fun getByName(name: String, pageable: Pageable): Page<Item> = repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCase(name, name, pageable)
 
-    fun geByContent(name: String,tags:List<String>, pageable: Pageable): Page<Item?> = repository.findByItemNameContainingIgnoreCase(name, pageable)
+    fun geByContent(name: String,tags:List<String>, pageable: Pageable): Page<Item> = repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCase(name, name, pageable)
 
     fun getByContentAndTag(name: String, tag:UUID?, pageable: Pageable): Page<ItemDto>? {
-//        return if (tag.toString().isEmpty()) {
-//            repository.findByItemNameContainingIgnoreCase(name,pageable)
-//        } else {
-//            repository.findByItemNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable)
-//
-//        }
-       return  itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
+        return if (tag == null) {
+            itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCase(name,name, pageable))
+        } else {
+            itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCaseAndTagIdEquals(name, name, tag, pageable))
+
+        }
+     //  return  itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
     }
 
     fun getById(id: UUID): ItemDto = repository.findByIdOrNull(id)?.toItemDto() ?:

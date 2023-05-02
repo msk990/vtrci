@@ -1,5 +1,6 @@
 package org.kranj.vtrci.controller
 
+import org.jetbrains.annotations.Nullable
 import org.kranj.vtrci.dtos.ItemDto
 import org.kranj.vtrci.dtos.NewItemDto
 import org.kranj.vtrci.model.Item
@@ -26,7 +27,7 @@ class ItemController (val service: ItemsService){
     @CrossOrigin
     @GetMapping("/poochie")
     fun getByNameAndTag(@RequestParam("term") term: String,
-                        @RequestParam("tag") tag: UUID?,
+                     @RequestParam("tag") tag: UUID?,
                   pageable: Pageable) = service.getByContentAndTag(term, tag, pageable)
 
  @CrossOrigin
@@ -36,7 +37,7 @@ class ItemController (val service: ItemsService){
                  pageable: Pageable) = service.geByContent(term, tags, pageable)
 
 
- @CrossOrigin
+    @CrossOrigin
     @GetMapping("/{id}")
     fun getItem(@PathVariable id: UUID) = service.getById(id)
 
