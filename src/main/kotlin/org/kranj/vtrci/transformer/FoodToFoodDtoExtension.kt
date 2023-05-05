@@ -53,7 +53,8 @@ fun Food.toFoodDto() : FoodDto {
         images = this?.images?.toMutableSet(),
         stages = this?.stages?.toMutableSet(),
         art = this?.art,
-        tag = this.tag?.toSet()
+        tag = this.tag?.toSet(),
+        meals = this.meals?.toSet()
 
     )
 
@@ -99,7 +100,8 @@ fun FoodDto.toFood(): Food {
         images = this?.images?.toMutableSet(),
         stages = this?.stages?.toMutableSet(),
         art = this?.art,
-        tag = this.tag?.toSet()
+        tag = this.tag?.toSet(),
+        meals = this.meals?.toSet(),
         )
 }
 

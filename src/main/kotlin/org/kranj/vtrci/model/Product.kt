@@ -25,7 +25,11 @@ class Product(
     @OneToMany(cascade = [CascadeType.ALL])
     val images: Set<ProductImage>?,
 
+
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name="join_product_art",
+        joinColumns=[JoinColumn(name="id_product", referencedColumnName="id", insertable = false, updatable = false)],
+        inverseJoinColumns=[JoinColumn(name="id_art", referencedColumnName="id")])
     val art: Art?,
 
     @ManyToMany(cascade = [CascadeType.PERSIST])

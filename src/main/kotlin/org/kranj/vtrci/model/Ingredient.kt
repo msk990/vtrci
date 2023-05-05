@@ -18,12 +18,16 @@ class Ingredient (
         val item:Item?,
 
         @Column(name = "ingredient_quantity")
-        val quantity:Double
+        val quantity:Double,
+
+        @Column(name = "special")
+        val special:Boolean? = false
         )
 {
 //        constructor() : this(
 //                UUID.randomUUID(),
 //                Item(),
-//                0.0
-  //      )
+//                0.0,
+//                false
+//        )
 }

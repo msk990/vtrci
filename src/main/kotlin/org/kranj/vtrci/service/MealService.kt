@@ -4,6 +4,7 @@ import org.kranj.vtrci.dtos.ItemDto
 import org.kranj.vtrci.model.Item
 import org.kranj.vtrci.model.Meal
 import org.kranj.vtrci.repository.MealRepository
+import org.kranj.vtrci.repository.MealSlotRepository
 import org.kranj.vtrci.transformer.toItem
 import org.kranj.vtrci.transformer.toItemDto
 import org.kranj.vtrci.transformer.toMealDto
@@ -15,7 +16,10 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Service
-class MealService (val repository: MealRepository) {
+class MealService (
+    val repository: MealRepository,
+    val slotRepository: MealSlotRepository
+) {
 
     fun getAll() = repository.findAll().map(Meal::toMealDto)
 
@@ -24,7 +28,21 @@ class MealService (val repository: MealRepository) {
     fun getById(id: UUID): Meal = repository.findByIdOrNull(id) ?:
     throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
-    fun create(meal:Meal) = repository.save(meal)
+    fun create(meal:Meal):Meal {
+        return if (slotRepository.existsById(meal.mealSlot.position)) {
+            repository.save(meal)
+        } else {
+            val ju = slotRepository.save(meal.mealSlot)
+
+            val newMeal = Meal(
+                UUID.randomUUID(),
+                meal.start,
+                meal.foods,
+                ju
+            )
+            repository.save(newMeal)
+        }
+    }
 
     fun remove(id: UUID) {
         if (repository.existsById(id)) repository.deleteById(id)

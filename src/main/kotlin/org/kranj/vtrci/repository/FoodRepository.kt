@@ -12,4 +12,8 @@ import java.util.*
 interface FoodRepository : JpaRepository<Food, UUID> {
 
     fun findByFoodNameContainingIgnoreCaseAndTagIdEquals(foodName: String, tagId: UUID?, pageable: Pageable): Page<Food>
+
+    fun findByFoodNameContainingIgnoreCaseOrFoodNameSlContainingIgnoreCase(foodName: String, content:String, pageable: Pageable): Page<Food>
+
+    fun findByFoodNameContainingIgnoreCaseOrFoodNameSlContainingIgnoreCaseAndTagIdEquals(foodName: String, content:String, tagId: UUID?, pageable: Pageable): Page<Food>
 }

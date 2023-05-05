@@ -45,7 +45,7 @@ val foodRepository: FoodRepository,
         val fileName = fileStorageService.storeFile(img.file)
         val foodImage = FoodImage(UUID.randomUUID(),position=img.position, name = fileName)
       //  return ResponseEntity.status(HttpStatus.OK).body(repository.save(foodImage))
-        var newFoodImages = food.images?.filter { image -> image.position !== img.position }?.toMutableSet()
+        var newFoodImages = food.images?.filter { image -> image.position != img.position }?.toMutableSet()
         newFoodImages?.add(foodImage)
 
         val newFood = Food(
@@ -84,7 +84,8 @@ val foodRepository: FoodRepository,
             newFoodImages,
             food.art,
             food.stages,
-            food.tag
+            food.tag,
+            food.meals
         )
         return if (foodRepository.existsById(food.id!!)) {
             food.id = food.id
@@ -95,7 +96,7 @@ val foodRepository: FoodRepository,
 
     fun update(foodId: UUID, position: Int): ResponseEntity<Any> {
         val food = foodRepository.getReferenceById(foodId)
-        val newFoodImages = food.images?.filter { foodImage ->  foodImage.position !== position}?.toMutableSet()
+        val newFoodImages = food.images?.filter { foodImage ->  foodImage.position != position}?.toMutableSet()
         val newFood = Food(
             food.id,
             food.foodName,
@@ -132,7 +133,8 @@ val foodRepository: FoodRepository,
             newFoodImages,
             food.art,
             food.stages,
-            food.tag
+            food.tag,
+            food.meals
         )
         return if (foodRepository.existsById(food.id!!)) {
             food.id = food.id

@@ -31,7 +31,9 @@ class ArtService (
             UUID.randomUUID(),
             art.name,
             srcName,
-            simpleName
+            simpleName,
+            setOf(),
+            setOf()
         )
         return repository.save(newArt)
     }

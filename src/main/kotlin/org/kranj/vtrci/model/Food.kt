@@ -1,5 +1,6 @@
 package org.kranj.vtrci.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
@@ -109,14 +110,25 @@ data class Food(
     @OneToMany (cascade = [CascadeType.ALL])
     val images: Set<FoodImage>?,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @JoinTable(name="join_food_art",
+        joinColumns=[JoinColumn(name="id_food", referencedColumnName="id", insertable = false, updatable = false)],
+        inverseJoinColumns=[JoinColumn(name="id_art", referencedColumnName="id")])
     val art: Art?,
 
-    @OneToMany (cascade = [CascadeType.ALL])
+    @ManyToMany (cascade = [CascadeType.ALL])
     val stages: Set<FoodStage>?,
 
     @ManyToMany(cascade = [CascadeType.PERSIST])
-    val tag: Set<MealTags>?
+    val tag: Set<MealTags>?,
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @JoinTable(name="join_meal_food",
+    joinColumns=[JoinColumn(name="id_food", referencedColumnName="id")],
+    inverseJoinColumns=[JoinColumn(name="id_meal", referencedColumnName="id")])
+    val meals: Set<Meal>?
 
     ) {
 //

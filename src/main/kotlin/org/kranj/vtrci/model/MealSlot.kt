@@ -1,5 +1,6 @@
 package org.kranj.vtrci.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 
 @Entity
@@ -11,7 +12,14 @@ class MealSlot(
 
     val position: Int,
     @ManyToOne
-    val frontArt: FrontArt?
+    val frontArt: FrontArt?,
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @JoinTable(name="join_slot_meal",
+        joinColumns=[JoinColumn(name="id_slot", referencedColumnName="position")],
+        inverseJoinColumns=[JoinColumn(name="id_meal", referencedColumnName="id")])
+    val meals: Set<Meal>?
 
 ) {
 }

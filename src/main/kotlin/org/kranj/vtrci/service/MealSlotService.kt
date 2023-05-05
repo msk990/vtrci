@@ -25,17 +25,20 @@ class MealSlotService (val repository: MealSlotRepository,
         val frontArt = frontArtRepository.getReferenceById(frontArtId)
         val newSlot = MealSlot(
         position,
-        frontArt
+        frontArt,
+            setOf()
         )
         return repository.save(newSlot)
 
     }
     fun deleteArt( position: Int):MealSlot {
-
+        val mealSlot = repository.getReferenceById(position)
 
         val newSlot = MealSlot(
             position,
-            null
+            null,
+            mealSlot.meals
+
         )
         return repository.save(newSlot)
 

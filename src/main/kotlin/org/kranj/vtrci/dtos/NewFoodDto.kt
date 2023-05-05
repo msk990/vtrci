@@ -17,6 +17,7 @@ data class NewFoodDto (
     val stages: MutableSet<FoodStage>?,
     val art: Art?,
     val tag: Set<MealTags>?
+
         )
 
 data class FoodDto (
@@ -32,12 +33,14 @@ data class FoodDto (
     val images: MutableSet<FoodImage>?,
     val stages: MutableSet<FoodStage>?,
     val art: Art?,
-    val tag: Set<MealTags>?
+    val tag: Set<MealTags>?,
+    val meals: Set<Meal>?
 )
 
 data class IngredientDto (
         val itemId: String,
-        val quantity: Double
+        val quantity: Double,
+        val special: Boolean?
         )
 
 data class MacroNutrients(

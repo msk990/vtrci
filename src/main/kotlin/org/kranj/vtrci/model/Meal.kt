@@ -24,8 +24,16 @@ class Meal (
     val start: Instant,
 
     @ManyToMany(cascade=[CascadeType.DETACH])
-    @Column(name = "foods")
-    val foods: List<Food>?
+    @JoinTable(name="join_meal_food",
+        joinColumns=[JoinColumn(name="id_meal", referencedColumnName="id", insertable = false, updatable = false)],
+        inverseJoinColumns=[JoinColumn(name="id_food", referencedColumnName="id")])
+    val foods: List<Food>?,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name="join_slot_meal",
+        joinColumns=[JoinColumn(name="id_meal", referencedColumnName="id", insertable = false, updatable = false)],
+        inverseJoinColumns=[JoinColumn(name="id_slot", referencedColumnName="position")])
+    val mealSlot: MealSlot
 )
 {
 }

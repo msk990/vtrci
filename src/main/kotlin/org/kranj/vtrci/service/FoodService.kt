@@ -32,13 +32,13 @@ class FoodService (val repository:FoodRepository,
 
   //  fun create(food: Food): Food = repository.save(food)
   fun getByContentAndTag(name: String, tag:UUID?, pageable: Pageable): Page<FoodDto> {
-//        return if (tag.toString().isEmpty()) {
-//            repository.findByItemNameContainingIgnoreCase(name,pageable)
-//        } else {
-//            repository.findByItemNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable)
-//
-//        }
-      return  foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
+        return if (tag == null) {
+            foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseOrFoodNameSlContainingIgnoreCase(name,name,pageable))
+        } else {
+            foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseOrFoodNameSlContainingIgnoreCaseAndTagIdEquals(name, name, tag, pageable))
+
+        }
+    //  return  foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
   }
 
     fun create(food: NewFoodDto): FoodDto = repository.save(addFoodTransformer.transform(food)).toFoodDto()
@@ -94,7 +94,8 @@ class FoodService (val repository:FoodRepository,
             food.images,
             art,
             food.stages,
-            food.tag
+            food.tag,
+            food.meals
         )
        return repository.save(newFood)
 
@@ -139,7 +140,8 @@ class FoodService (val repository:FoodRepository,
             food.images,
             null,
             food.stages,
-            food.tag
+            food.tag,
+            food.meals
         )
         return repository.save(newFood)
 

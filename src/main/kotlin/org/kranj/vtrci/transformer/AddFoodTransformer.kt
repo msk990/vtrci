@@ -80,14 +80,16 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
                         0.0,
                         setOf(),
                         ),
-                    it.quantity
+                    it.quantity,
+                    it.special
 
                 )
             }.toMutableSet(),
             images=source.images?.toMutableSet(),
             stages=source.stages?.toMutableSet(),
             art=source.art,
-            tag = source.tag?.toSet()
+            tag = source.tag?.toSet(),
+            meals = setOf()
 
 
         )
