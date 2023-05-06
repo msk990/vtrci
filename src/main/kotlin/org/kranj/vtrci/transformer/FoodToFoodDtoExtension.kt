@@ -101,7 +101,7 @@ fun FoodDto.toFood(): Food {
         stages = this?.stages?.toMutableSet(),
         art = this?.art,
         tag = this.tag?.toSet(),
-        meals = this.meals?.toSet(),
+        meals = this.meals?.toList(),
         )
 }
 

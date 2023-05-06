@@ -34,7 +34,8 @@ fun Meal.toMealDto() : MealDto {
         end = endd,
         title = ttl,
         foods = this.foods?.map(Food::toFoodForMeal),
-        color = "#fff"
+        color = "#fff",
+//        position = this.mealSlot.position
 
     )
 }

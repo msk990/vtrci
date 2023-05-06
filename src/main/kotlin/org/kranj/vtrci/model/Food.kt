@@ -124,11 +124,11 @@ data class Food(
     val tag: Set<MealTags>?,
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @ManyToMany()
     @JoinTable(name="join_meal_food",
     joinColumns=[JoinColumn(name="id_food", referencedColumnName="id")],
     inverseJoinColumns=[JoinColumn(name="id_meal", referencedColumnName="id")])
-    val meals: Set<Meal>?
+    val meals: List<Meal>?
 
     ) {
 //

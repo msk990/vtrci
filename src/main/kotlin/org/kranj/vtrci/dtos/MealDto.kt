@@ -15,7 +15,8 @@ class MealDto (
     val end: Instant,
     val title: String,
     val foods: List<FoodForMeal>?,
-    val color: String
+    val color: String,
+   // val position: Int,
         ){
 
 

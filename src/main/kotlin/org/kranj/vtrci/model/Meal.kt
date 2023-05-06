@@ -23,7 +23,7 @@ class Meal (
 
     val start: Instant,
 
-    @ManyToMany(cascade=[CascadeType.DETACH])
+    @ManyToMany()
     @JoinTable(name="join_meal_food",
         joinColumns=[JoinColumn(name="id_meal", referencedColumnName="id", insertable = false, updatable = false)],
         inverseJoinColumns=[JoinColumn(name="id_food", referencedColumnName="id")])

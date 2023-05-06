@@ -90,7 +90,7 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
             stages=source.stages?.toMutableSet(),
             art=source.art,
             tag = source.tag?.toSet(),
-            meals = setOf()
+            meals = listOf()
 
 
         )
