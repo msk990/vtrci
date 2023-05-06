@@ -98,6 +98,12 @@ class Item (
     @Column(name = "vitamin_e")
     val vitaminE: Double,
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+    @JoinTable(name="join_item_art",
+        joinColumns=[JoinColumn(name="id_item", referencedColumnName="id", insertable = false, updatable = false)],
+        inverseJoinColumns=[JoinColumn(name="id_art", referencedColumnName="id")])
+    val art: Art?,
+
 
     @ManyToMany(cascade = [CascadeType.PERSIST])
     val tag: Set<Tag>?

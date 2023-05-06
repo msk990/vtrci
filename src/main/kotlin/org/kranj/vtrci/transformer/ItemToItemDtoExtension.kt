@@ -42,7 +42,7 @@ fun Item.toItemDto() : ItemDto {
             vitaminD = this.vitaminD,
             vitaminE = this.vitaminE,
         ),
-
+        art = this.art,
         tag = this.tag?.toSet()
     )
 }
@@ -81,7 +81,7 @@ fun ItemDto.toItem(): Item {
             vitaminC = this.microNutrients.vitaminC,
             vitaminD = this.microNutrients.vitaminD,
             vitaminE = this.microNutrients.vitaminE,
-
+            art = this.art,
 
         tag = this.tag?.toSet()
     )

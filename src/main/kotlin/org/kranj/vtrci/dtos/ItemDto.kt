@@ -1,5 +1,6 @@
 package org.kranj.vtrci.dtos
 
+import org.kranj.vtrci.model.Art
 import org.kranj.vtrci.model.Tag
 import java.util.*
 
@@ -10,6 +11,7 @@ data class ItemDto (
     val itemNameSl: String,
     val macroNutrients: MacroNutrients,
     val microNutrients: MicroNutrients,
+    val art: Art?,
     val tag: Set<Tag>?
 
 )

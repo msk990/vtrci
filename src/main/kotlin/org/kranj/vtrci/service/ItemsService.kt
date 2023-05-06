@@ -3,6 +3,7 @@ package org.kranj.vtrci.service
 import org.kranj.vtrci.dtos.ItemDto
 import org.kranj.vtrci.dtos.NewItemDto
 import org.kranj.vtrci.model.Item
+import org.kranj.vtrci.repository.ArtRepository
 import org.kranj.vtrci.repository.ItemsRepository
 import org.kranj.vtrci.transformer.AddItemTransformer
 import org.kranj.vtrci.transformer.ItemPageableTransformer
@@ -18,8 +19,9 @@ import java.util.UUID
 
 @Service
 class ItemsService (val repository: ItemsRepository,
-private val addItemTransformer: AddItemTransformer,
-private val itemPageableTransformer: ItemPageableTransformer){
+                    val artRepository: ArtRepository,
+                    private val addItemTransformer: AddItemTransformer,
+                    private val itemPageableTransformer: ItemPageableTransformer){
     fun getAll(pageable: Pageable): Page<Item> = repository.findAll(pageable)
 
     fun getByName(name: String, pageable: Pageable): Page<Item> = repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCase(name, name, pageable)
@@ -52,4 +54,86 @@ private val itemPageableTransformer: ItemPageableTransformer){
             repository.save(item.toItem())
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
-};
+
+    fun addArt(artId: UUID, itemId: UUID): Item{
+        val item = repository.getReferenceById(itemId)
+        val art = artRepository.getReferenceById(artId)
+
+        val newItem = Item(
+            item.id,
+            item.processing,
+            item.itemName,
+            item.itemNameSl,
+            item.energyKj,
+            item.energyKcal,
+            item.protein,
+            item.carbs,
+            item.sugars,
+            item.dietaryFibre,
+            item.fat,
+            item.saturated,
+            item.ca,
+            item.fe,
+            item.mg,
+            item.k,
+            item.na,
+            item.zn,
+            item.carotenoide,
+            item.retinol,
+            item.thiamin,
+            item.riboflavin,
+            item.niacin,
+            item.b6,
+            item.b12,
+            item.folate,
+            item.vitaminC,
+            item.vitaminD,
+            item.vitaminE,
+            art,
+            item.tag
+        )
+        return repository.save(newItem)
+
+    }
+
+    fun removeArt(itemId: UUID): Item{
+        val item = repository.getReferenceById(itemId)
+
+
+        val newItem = Item(
+            item.id,
+            item.processing,
+            item.itemName,
+            item.itemNameSl,
+            item.energyKj,
+            item.energyKcal,
+            item.protein,
+            item.carbs,
+            item.sugars,
+            item.dietaryFibre,
+            item.fat,
+            item.saturated,
+            item.ca,
+            item.fe,
+            item.mg,
+            item.k,
+            item.na,
+            item.zn,
+            item.carotenoide,
+            item.retinol,
+            item.thiamin,
+            item.riboflavin,
+            item.niacin,
+            item.b6,
+            item.b12,
+            item.folate,
+            item.vitaminC,
+            item.vitaminD,
+            item.vitaminE,
+            null,
+            item.tag
+        )
+        return repository.save(newItem)
+
+    }
+}

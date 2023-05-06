@@ -33,7 +33,14 @@ class Art(
     @JoinTable(name="join_food_art",
         joinColumns=[JoinColumn(name="id_art", referencedColumnName="id")],
         inverseJoinColumns=[JoinColumn(name="id_food", referencedColumnName="id")])
-    val foods: Set<Food>?
+    val foods: Set<Food>?,
+
+    @JsonIgnore
+@OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
+@JoinTable(name="join_item_art",
+    joinColumns=[JoinColumn(name="id_art", referencedColumnName="id")],
+    inverseJoinColumns=[JoinColumn(name="id_item", referencedColumnName="id")])
+val items: Set<Item>?
 
 
 ) {

@@ -78,6 +78,7 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
                         0.0,
                         0.0,
                         0.0,
+                        null,
                         setOf(),
                         ),
                     it.quantity,

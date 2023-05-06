@@ -33,6 +33,7 @@ class ArtService (
             srcName,
             simpleName,
             setOf(),
+            setOf(),
             setOf()
         )
         return repository.save(newArt)

@@ -40,7 +40,7 @@ class UpdateItemTransformer: Transformer<ItemDto, Item> {
             vitaminC = source.microNutrients.vitaminC,
             vitaminD = source.microNutrients.vitaminD,
             vitaminE = source.microNutrients.vitaminE,
-
+            art = source.art,
             tag = source.tag?.toSet()
         )
     }
