@@ -35,7 +35,7 @@ class FoodService (val repository:FoodRepository,
         return if (tag == null) {
             foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseOrFoodNameSlContainingIgnoreCase(name,name,pageable))
         } else {
-            foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseOrFoodNameSlContainingIgnoreCaseAndTagIdEquals(name, name, tag, pageable))
+            foodPageableTransformer.transform(repository.findByTagIdEquals(tag, pageable))
 
         }
     //  return  foodPageableTransformer.transform(repository.findByFoodNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))

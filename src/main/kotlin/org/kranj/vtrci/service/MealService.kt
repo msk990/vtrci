@@ -1,6 +1,7 @@
 package org.kranj.vtrci.service
 
 import org.kranj.vtrci.dtos.ItemDto
+import org.kranj.vtrci.dtos.MealForAdd
 import org.kranj.vtrci.model.Item
 import org.kranj.vtrci.model.Meal
 import org.kranj.vtrci.repository.MealRepository
@@ -8,6 +9,7 @@ import org.kranj.vtrci.repository.MealSlotRepository
 import org.kranj.vtrci.transformer.toItem
 import org.kranj.vtrci.transformer.toItemDto
 import org.kranj.vtrci.transformer.toMealDto
+import org.kranj.vtrci.transformer.toMealForAdd
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -25,7 +27,7 @@ class MealService (
 
     fun getByStart(start:LocalDateTime) = repository.findByStart(start)
 
-    fun getById(id: UUID): Meal = repository.findByIdOrNull(id) ?:
+    fun getById(id: UUID): MealForAdd = repository.findByIdOrNull(id)?.toMealForAdd() ?:
     throw ResponseStatusException(HttpStatus.NOT_FOUND)
 
     fun create(meal:Meal):Meal {

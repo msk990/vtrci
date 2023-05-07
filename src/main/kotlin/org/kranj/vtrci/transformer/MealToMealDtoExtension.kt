@@ -1,11 +1,11 @@
 package org.kranj.vtrci.transformer
 
 import org.kranj.vtrci.dtos.MealDto
+import org.kranj.vtrci.dtos.MealForAdd
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.model.Meal
 import java.time.Instant
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset.UTC
 import java.time.temporal.ChronoUnit
 
@@ -37,5 +37,13 @@ fun Meal.toMealDto() : MealDto {
         color = "#fff",
 //        position = this.mealSlot.position
 
+    )
+}
+
+fun Meal.toMealForAdd() : MealForAdd {
+    return MealForAdd(
+       id =  this.id,
+        start = this.start,
+        foods = this.foods?.map(Food::toFoodDto)
     )
 }

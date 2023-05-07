@@ -9,7 +9,7 @@ data class FoodForMeal(
     val foodNameSl: String
 
 )
-class MealDto (
+class MealDto(
     val id: UUID?,
     val start: Instant,
     val end: Instant,
@@ -21,3 +21,8 @@ class MealDto (
 
 
 }
+data class MealForAdd(
+    val id:UUID?,
+    val start:Instant,
+    val foods: List<FoodDto>?
+)

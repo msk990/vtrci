@@ -32,7 +32,7 @@ class ItemsService (val repository: ItemsRepository,
         return if (tag == null) {
             itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCase(name,name, pageable))
         } else {
-            itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseOrItemNameSlContainingIgnoreCaseAndTagIdEquals(name, name, tag, pageable))
+            itemPageableTransformer.transform(repository.findByTagIdEquals(tag, pageable))
 
         }
      //  return  itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
