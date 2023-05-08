@@ -49,6 +49,11 @@ class ProductService(
         //  return  itemPageableTransformer.transform(repository.findByItemNameContainingIgnoreCaseAndTagIdEquals(name, tag, pageable))
     }
 
+    fun getByItemIdIn(idList: List<UUID>): List<ProductDto> {
+
+//        val uuidList = idList.map { UUID.fromString(it) }
+        return productRepository.findByItemIdIn(idList).map(Product::toProductDto)
+    }
     fun create(pr:NewProductDto):Product {
         val externalId = pr.externalId
         val item = itemRepository.getReferenceById(pr.itemId)

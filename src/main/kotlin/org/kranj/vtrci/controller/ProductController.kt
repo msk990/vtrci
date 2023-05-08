@@ -17,6 +17,11 @@ class ProductController(val service: ProductService) {
     @GetMapping
     fun getAllProducts(pageable: Pageable) = service.getAll(pageable)
 
+    @CrossOrigin
+    @GetMapping("/poochie")
+    fun getByItemIdIn(@RequestParam("itemIds") itemIds: List<UUID>) = service.getByItemIdIn(itemIds)
+
+
 //    @CrossOrigin
 //    @GetMapping("/poochie")
 //    fun getByNameAndTag(@RequestParam("term") term: String,
