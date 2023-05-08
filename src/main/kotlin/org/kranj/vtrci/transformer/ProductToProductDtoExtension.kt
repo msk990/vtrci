@@ -14,6 +14,8 @@ fun Product.toProductDto() : ProductDto {
         producerName = this.producer?.producerName,
         producerAddress = this.producer?.address,
         images = this.images?.toMutableSet(),
-        art = this.art
+        art = this.art,
+        lat = this.producer?.lat,
+        long = this.producer?.long
     )
 }

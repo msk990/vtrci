@@ -16,6 +16,8 @@ data class ProductDto (
     val producerAddress: String?,
     val images: MutableSet<ProductImage>?,
     val art: Art?,
+    val lat: Double?,
+    val long: Double?,
 
     )
 
