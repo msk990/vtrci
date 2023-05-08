@@ -26,4 +26,18 @@ class MealPeriodController (val service: MealPeriodService) {
 
                         ) = service.getMealsInDay(Instant.parse(event))
 
+    @CrossOrigin
+    @GetMapping("/popchi")
+    fun getAllMealsInDay(@RequestParam("event") event: String,
+
+
+                      ) = service.getAllMealsInDay(Instant.parse(event))
+
+    @CrossOrigin
+    @GetMapping("/maimun")
+    fun getNutrMealsDay(@RequestParam("event") event: String,
+
+
+                         ) = service.getNutrMealsInDay(Instant.parse(event))
+
 }

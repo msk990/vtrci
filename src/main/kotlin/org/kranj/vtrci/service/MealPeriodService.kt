@@ -35,6 +35,63 @@ class MealPeriodService (val repository: MealRepository) {
 
         //5. get sum of raw, home cooked, lightly processed, processed
     }
+    fun getNutrMealsInDay(event:Instant) :AllMealNutr {
+        //1. get start and end of day of meal
+        val eventSpan = getDayPeriod(event)
+
+        //      2.  get all meals of the day and filter out current meal
+        val dayMeals = getMealsInPeriod(eventSpan.dayStart, eventSpan.dayEnd).filter{it -> it.start != event}
+        //3. get all foods
+        val foods:List<Food> = getFoods(dayMeals)
+        //4. add all foods micros and macros
+        val nutrients = addFoodNutrients(foods)
+        //5. get sum of raw, home cooked, lightly processed, processed
+        //4.1 get macro nutrients
+        val macroNutrients = getMacroNutrients(nutrients)
+
+        //4.2 get micro nutrients
+        val microNutrients = getMicroNutrients(nutrients)
+
+        //5. get sum of raw, home cooked, lightly processed, processed
+        val processing = getProcessingSlice(foods)
+
+        val allMealNutr = AllMealNutr(
+            microNutrients,
+            macroNutrients,
+            processing
+        )
+        return allMealNutr
+        //5. get sum of raw, home cooked, lightly processed, processed
+    }
+
+    fun getAllMealsInDay(event:Instant) :AllMealNutr {
+        //1. get start and end of day of meal
+        val eventSpan = getDayPeriod(event)
+
+        //      2.  get all meals of the day and filter out current meal
+        val dayMeals = getMealsInPeriod(eventSpan.dayStart, eventSpan.dayEnd)
+        //3. get all foods
+        val foods:List<Food> = getFoods(dayMeals)
+        //4. add all foods micros and macros
+        val nutrients = addFoodNutrients(foods)
+        //4.1 get macro nutrients
+        val macroNutrients = getMacroNutrients(nutrients)
+
+        //4.2 get micro nutrients
+        val microNutrients = getMicroNutrients(nutrients)
+
+        //5. get sum of raw, home cooked, lightly processed, processed
+        val processing = getProcessingSlice(foods)
+
+        val allMealNutr = AllMealNutr(
+            microNutrients,
+            macroNutrients,
+            processing
+        )
+        return allMealNutr
+
+        //5. get sum of raw, home cooked, lightly processed, processed
+    }
 
     fun getDayPeriod(event:Instant) : DayPeriod {
         var ldt: LocalDateTime = LocalDateTime.ofInstant(event, ZoneId.systemDefault())
@@ -128,6 +185,43 @@ class MealPeriodService (val repository: MealRepository) {
         return totalNutrients
     }
 }
+
+fun getMicroNutrients(nutrients: Nutrients) : MicroNutrients {
+    val newMicro = MicroNutrients(
+        nutrients.ca,
+        nutrients.fe,
+        nutrients.mg,
+        nutrients.k,
+        nutrients.na,
+        nutrients.zn,
+        nutrients.carotenoide,
+        nutrients.retinol,
+        nutrients.thiamin,
+        nutrients.riboflavin,
+        nutrients.niacin,
+        nutrients.b6,
+        nutrients.b12,
+        nutrients.folate,
+        nutrients.vitaminC,
+        nutrients.vitaminD,
+        nutrients.vitaminE
+    )
+    return newMicro
+}
+
+fun getMacroNutrients(nutrients: Nutrients) : MacroNutrients {
+    val newMacro = MacroNutrients(
+        nutrients.energyKj,
+        nutrients.energyKcal,
+        nutrients.protein,
+        nutrients.carbs,
+        nutrients.sugars,
+        nutrients.dietaryFibre,
+        nutrients.fat,
+        nutrients.saturated
+    )
+    return newMacro
+}
 fun getProcessingSlice(foods: List<Food>): FoodProcessing {
     var totalProcessing:FoodProcessing  = FoodProcessing(
         0.0,
@@ -208,6 +302,37 @@ data class Nutrients(
 
     )
 
+data class MacroNutrients (
+    var energyKj: Double,
+    var energyKcal: Double,
+    var protein: Double,
+    var carbs: Double,
+    var sugars: Double,
+    var dietaryFibre: Double,
+    var fat: Double,
+    var saturated: Double,
+        )
+
+data class MicroNutrients(
+    var ca: Double,
+    var fe: Double,
+    var mg: Double,
+    var k: Double,
+    var na: Double,
+    var zn: Double,
+    var carotenoide: Double,
+    var retinol: Double,
+    var thiamin: Double,
+    var riboflavin: Double,
+    var niacin: Double,
+    var b6: Double,
+    var b12: Double,
+    var folate: Double,
+    var vitaminC: Double,
+    var vitaminD: Double,
+    var vitaminE: Double,
+)
+
 data class FoodProcessing (
     var raw: Double,
     var light: Double,
@@ -217,5 +342,11 @@ data class FoodProcessing (
 
 data class AllMealInfo(
     val nutrients: Nutrients,
+    val processing: FoodProcessing
+)
+
+data class AllMealNutr(
+    val microNutrients: MicroNutrients,
+    val macroNutrients: MacroNutrients,
     val processing: FoodProcessing
 )
