@@ -16,6 +16,7 @@ class MealDto(
     val title: String,
     val foods: List<FoodForMeal>?,
     val color: String,
+    val slot: Int
    // val position: Int,
         ){
 
@@ -24,5 +25,6 @@ class MealDto(
 data class MealForAdd(
     val id:UUID?,
     val start:Instant,
-    val foods: List<FoodDto>?
+    val foods: List<FoodDto>?,
+
 )

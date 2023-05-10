@@ -29,4 +29,10 @@ class MealController (val service: MealService) {
     @CrossOrigin
     @PutMapping("/{id}")
     fun updateFood(@PathVariable id: UUID, @RequestBody meal: Meal) = service.update(id, meal)
+
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteItem(@PathVariable id: UUID) = service.remove(id)
+
 }
