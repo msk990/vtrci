@@ -5,8 +5,8 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-@Table(name = "producers")
-class Producer(
+@Table(name = "organizations")
+class Organization(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     var id: UUID?,
@@ -14,8 +14,8 @@ class Producer(
     @Column(name = "external_id")
     val externalId: String?,
 
-    @Column(name = "producer_name")
-    val producerName: String,
+    @Column(name = "organization_name")
+    val organizationName: String,
 
     @Column(name = "address")
     val address: String?,
@@ -30,14 +30,18 @@ class Producer(
     val long: Double?,
 
     @OneToMany (cascade = [CascadeType.ALL])
-    val images: Set<FarmImage>?,
+    val images: Set<OrganizationImage>?,
 
     @ManyToMany(cascade = [CascadeType.PERSIST])
     val certificates: Set<Certificate>?,
 
     @OneToMany(mappedBy ="producer", cascade = [CascadeType.ALL])
     @JsonIgnore
-    val products: List<Product>?
+    val products: List<Product>?,
+
+    @OneToMany(mappedBy ="organization", cascade = [CascadeType.ALL])
+    @JsonIgnore
+    val users: List<UserEntity>?,
 
 
 ) {

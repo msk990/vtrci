@@ -5,13 +5,18 @@ import org.kranj.vtrci.dtos.NewFoodDto
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.model.Ingredient
 import org.kranj.vtrci.model.Item
+import org.kranj.vtrci.repository.ItemsRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class AddFoodTransformer: Transformer<NewFoodDto, Food> {
+    @Autowired
+   lateinit var itemsRepository: ItemsRepository
     override fun transform(source: NewFoodDto): Food {
+
         return Food (
             id= UUID.randomUUID(),
             foodName = source.foodName,
@@ -49,40 +54,11 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
             ingredients = source.ingredients.map{
                 Ingredient(
                     UUID.randomUUID(),
-                    Item(UUID.fromString(it.itemId),
-                        "",
-                        "",
-                        "",
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        null,
-                        setOf(),
-                        ),
+                    itemsRepository.getReferenceById(UUID.fromString(it.itemId)),
+
                     it.quantity,
-                    it.special
+                    it.special,
+                    mutableListOf()
 
                 )
             }.toMutableSet(),
@@ -90,7 +66,8 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
             stages=source.stages?.toMutableSet(),
             art=source.art,
             tag = source.tag?.toSet(),
-            meals = listOf()
+            meals = listOf(),
+            instances = listOf()
 
 
         )

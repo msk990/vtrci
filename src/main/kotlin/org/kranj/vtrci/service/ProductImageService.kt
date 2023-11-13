@@ -35,7 +35,7 @@ class ProductImageService(
             position = img.position,
             name = fileName
         )
-        var newProductImages = product.images?.filter { image -> image.position !== img.position }?.toMutableSet()
+        var newProductImages = product.images?.filter { image -> image.position != img.position }?.toMutableSet()
         newProductImages?.add(productImage)
 
         val newProduct = Product(
@@ -44,6 +44,7 @@ class ProductImageService(
             product.item,
             product.producer,
             newProductImages,
+            product.steps,
             product.art,
             product.tag
         )
@@ -56,7 +57,7 @@ class ProductImageService(
 
     fun update(productId: UUID, position: Int): ResponseEntity<Any> {
         val product = productRepository.getReferenceById(productId)
-        var newProductImages = product.images?.filter { image -> image.position !== position }?.toMutableSet()
+        var newProductImages = product.images?.filter { image -> image.position != position }?.toMutableSet()
 
         val newProduct = Product(
             product.id,
@@ -64,6 +65,7 @@ class ProductImageService(
             product.item,
             product.producer,
             newProductImages,
+            product.steps,
             product.art,
             product.tag
         )

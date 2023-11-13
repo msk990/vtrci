@@ -1,5 +1,6 @@
 package org.kranj.vtrci.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.time.Instant
 import java.util.*
@@ -12,13 +13,18 @@ class InventoryItem(
     @Column(name = "id")
     var id: UUID?,
 
-    @ManyToOne(cascade = [CascadeType.PERSIST])
-    val item: Item?,
+//    @ManyToOne(cascade = [CascadeType.PERSIST])
+//    @JoinColumn(name = "item")
+//    val item: Item?,
 
     @Column(name = "quantity")
     val quantity: Double?,
 
-    @ManyToOne(cascade = [CascadeType.PERSIST])
+    @Column(name = "unit")
+    val unit: String?,
+
+    @ManyToOne(cascade = [CascadeType.PERSIST], fetch = FetchType.LAZY)
+    @JoinColumn(name = "product")
     val product: Product?,
 
     @Column(name = "lot_number")
@@ -30,8 +36,21 @@ class InventoryItem(
     @Column(name = "expiration_date")
     val expirationDate: Instant,
 
-    @Column(name = "owner")
-    val owner: String
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner")
+    val owner: Organization?,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "custodian")
+    val custodian: Organization?,
+
+    val status: String?,
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "inventory",cascade = [CascadeType.ALL])
+    val deliveries: List<Delivery>?
+
 
 
 

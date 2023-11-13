@@ -2,6 +2,7 @@ package org.kranj.vtrci.dtos
 
 import org.kranj.vtrci.model.Art
 import org.kranj.vtrci.model.FoodImage
+import org.kranj.vtrci.model.ProcessStep
 import org.kranj.vtrci.model.ProductImage
 import java.util.*
 
@@ -15,6 +16,7 @@ data class ProductDto (
     val producerName: String?,
     val producerAddress: String?,
     val images: MutableSet<ProductImage>?,
+    val steps: MutableSet<ProcessStep>?,
     val art: Art?,
     val lat: Double?,
     val long: Double?,
@@ -25,6 +27,6 @@ data class NewProductDto (
 
     val externalId: String?,
     val itemId: UUID,
-    val producerId: UUID,
+    //val producerId: UUID,
 
     )

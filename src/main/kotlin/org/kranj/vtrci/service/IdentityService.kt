@@ -1,7 +1,6 @@
 package org.kranj.vtrci.service
 
 import org.kranj.vtrci.model.Identity
-import org.kranj.vtrci.model.Producer
 import org.kranj.vtrci.repository.IdentityRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus

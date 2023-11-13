@@ -23,10 +23,12 @@ class MealSlotService (val repository: MealSlotRepository,
     fun addArt(frontArtId: UUID, position: Int):MealSlot {
 
         val frontArt = frontArtRepository.getReferenceById(frontArtId)
+       val meals = getById(position).meals
         val newSlot = MealSlot(
         position,
         frontArt,
-            setOf()
+            meals
+          //  setOf()
         )
         return repository.save(newSlot)
 

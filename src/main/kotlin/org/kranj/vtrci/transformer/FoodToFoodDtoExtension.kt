@@ -6,8 +6,11 @@ import org.kranj.vtrci.dtos.FoodForMeal
 import org.kranj.vtrci.dtos.MacroNutrients
 import org.kranj.vtrci.dtos.MicroNutrients
 import org.kranj.vtrci.model.Food
-
-
+import org.kranj.vtrci.repository.FoodRepository
+import org.kranj.vtrci.repository.IngredientsRepository
+import org.kranj.vtrci.repository.ItemsRepository
+import org.kranj.vtrci.service.IngredientsService
+import org.springframework.beans.factory.annotation.Autowired
 
 
 fun Food.toFoodDto() : FoodDto {
@@ -60,8 +63,20 @@ fun Food.toFoodDto() : FoodDto {
 
 }
 
-fun FoodDto.toFood(): Food {
-    return Food(
+fun FoodDto.toFood(
+    foodRepository: FoodRepository,
+    ingredientsService: IngredientsService,
+
+): Food {
+
+    val oldFood = this.id?.let { foodRepository.getReferenceById(it) }
+
+    if (oldFood?.ingredients?.isNotEmpty() == true) {
+        oldFood.ingredients.forEach{
+            it.id?.let { it1 -> ingredientsService.remove(it1) }
+        }
+    }
+    val newFood = Food(
         id = this.id,
         foodName = this.foodName,
         foodNameSl = this.foodNameSl,
@@ -96,13 +111,15 @@ fun FoodDto.toFood(): Food {
         vitaminD = this.microNutrients.vitaminD,
         vitaminE = this.microNutrients.vitaminE,
 
-        ingredients = this?.ingredients?.toMutableSet(),
+        ingredients = this?.ingredients,
         images = this?.images?.toMutableSet(),
         stages = this?.stages?.toMutableSet(),
         art = this?.art,
         tag = this.tag?.toSet(),
-        meals = this.meals?.toList(),
+        meals = oldFood?.meals,
+        instances = oldFood?.instances
         )
+    return newFood
 }
 
 fun Food.toFoodForMeal() : FoodForMeal {

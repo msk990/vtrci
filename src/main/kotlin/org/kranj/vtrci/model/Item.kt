@@ -104,10 +104,13 @@ class Item (
         inverseJoinColumns=[JoinColumn(name="id_art", referencedColumnName="id")])
     val art: Art?,
 
-
     @ManyToMany(cascade = [CascadeType.PERSIST])
     val tag: Set<Tag>?
-        ) {
+
+
+
+
+    ) {
 
 
 }

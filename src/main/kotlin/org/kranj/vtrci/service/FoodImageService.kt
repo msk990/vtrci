@@ -85,7 +85,8 @@ val foodRepository: FoodRepository,
             food.art,
             food.stages,
             food.tag,
-            food.meals
+            food.meals,
+            food.instances
         )
         return if (foodRepository.existsById(food.id!!)) {
             food.id = food.id
@@ -134,7 +135,8 @@ val foodRepository: FoodRepository,
             food.art,
             food.stages,
             food.tag,
-            food.meals
+            food.meals,
+           food.instances
         )
         return if (foodRepository.existsById(food.id!!)) {
             food.id = food.id

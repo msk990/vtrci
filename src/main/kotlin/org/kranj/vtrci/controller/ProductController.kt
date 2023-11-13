@@ -15,12 +15,27 @@ import java.util.*
 class ProductController(val service: ProductService) {
     @CrossOrigin
     @GetMapping
-    fun getAllProducts(pageable: Pageable) = service.getAll(pageable)
+    fun getAllProducts(pageable: Pageable) = service.getAllByProducer(pageable)
+
+    @CrossOrigin
+    @GetMapping("/juje")
+    fun getByName(@RequestParam("term") term: String,
+
+                        pageable: Pageable) = service.getByContentAndProducer(term, pageable)
+
+    @CrossOrigin
+    @GetMapping("/school")
+    fun getAllByName(@RequestParam("term") term: String,
+
+                  pageable: Pageable) = service.getByContent(term, pageable)
 
     @CrossOrigin
     @GetMapping("/poochie")
     fun getByItemIdIn(@RequestParam("itemIds") itemIds: List<UUID>) = service.getByItemIdIn(itemIds)
 
+    @CrossOrigin
+    @GetMapping("/by-item/{id}")
+    fun getByItemId(@PathVariable id: UUID) = service.getByItemId(id)
 
 //    @CrossOrigin
 //    @GetMapping("/poochie")

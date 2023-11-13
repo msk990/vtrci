@@ -1,6 +1,5 @@
 package org.kranj.vtrci.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.util.*
 
@@ -20,10 +19,13 @@ class Product(
 
     @ManyToOne(fetch = FetchType.EAGER)
 
-    val producer: Producer?,
+    val producer: Organization?,
 
     @OneToMany(cascade = [CascadeType.ALL])
     val images: Set<ProductImage>?,
+
+    @OneToMany(cascade = [CascadeType.ALL])
+    val steps: Set<ProcessStep>?,
 
 
     @ManyToOne(fetch = FetchType.LAZY)

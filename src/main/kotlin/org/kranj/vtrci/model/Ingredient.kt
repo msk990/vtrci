@@ -3,7 +3,8 @@ package org.kranj.vtrci.model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
-import java.util.UUID
+import java.util.*
+
 
 @Entity
 @Table(name = "ingredient")
@@ -21,8 +22,14 @@ class Ingredient (
         val quantity:Double,
 
         @Column(name = "special")
-        val special:Boolean? = false
-        )
+        val special:Boolean? = false,
+
+        @JsonIgnore
+   //     @OneToMany(mappedBy="ingredient", orphanRemoval = true, fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+      @OneToMany
+        @JoinColumn(name = "ingredient")
+        val ingInstances: List<IngredientInstance>?
+)
 {
 //        constructor() : this(
 //                UUID.randomUUID(),

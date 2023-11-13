@@ -4,6 +4,7 @@ import org.kranj.vtrci.dtos.ItemDto
 import org.kranj.vtrci.dtos.NewItemDto
 import org.kranj.vtrci.model.Item
 import org.kranj.vtrci.repository.ArtRepository
+import org.kranj.vtrci.repository.IngredientsRepository
 import org.kranj.vtrci.repository.ItemsRepository
 import org.kranj.vtrci.transformer.AddItemTransformer
 import org.kranj.vtrci.transformer.ItemPageableTransformer
@@ -19,6 +20,7 @@ import java.util.UUID
 
 @Service
 class ItemsService (val repository: ItemsRepository,
+                    val ingredientsRepository: IngredientsRepository,
                     val artRepository: ArtRepository,
                     private val addItemTransformer: AddItemTransformer,
                     private val itemPageableTransformer: ItemPageableTransformer){
@@ -44,7 +46,14 @@ class ItemsService (val repository: ItemsRepository,
     fun create(item: NewItemDto): Item = repository.save(addItemTransformer.transform(item))
 
     fun remove(id: UUID) {
-        if (repository.existsById(id)) repository.deleteById(id)
+        if (repository.existsById(id)) {
+            if (ingredientsRepository.existsByItemId(id)) {
+               ingredientsRepository.deleteFromIngredientRelationshipItem(id)
+                ingredientsRepository.deleteByItemId(id)
+            }
+            repository.deleteById(id)
+
+        }
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 
@@ -90,7 +99,8 @@ class ItemsService (val repository: ItemsRepository,
             item.vitaminD,
             item.vitaminE,
             art,
-            item.tag
+            item.tag,
+
         )
         return repository.save(newItem)
 
@@ -131,7 +141,8 @@ class ItemsService (val repository: ItemsRepository,
             item.vitaminD,
             item.vitaminE,
             null,
-            item.tag
+            item.tag,
+
         )
         return repository.save(newItem)
 

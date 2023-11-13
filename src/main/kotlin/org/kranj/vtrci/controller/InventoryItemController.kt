@@ -1,9 +1,7 @@
 package org.kranj.vtrci.controller
 
 
-import org.kranj.vtrci.dtos.FoodDto
-import org.kranj.vtrci.dtos.NewInventoryDto
-import org.kranj.vtrci.dtos.NewProductDto
+import org.kranj.vtrci.dtos.*
 import org.kranj.vtrci.model.InventoryItem
 import org.kranj.vtrci.model.Product
 import org.kranj.vtrci.service.InventoryItemService
@@ -27,6 +25,15 @@ class InventoryItemController(val service: InventoryItemService) {
     ) = service.getByItemId(itemId)
 
     @CrossOrigin
+    @GetMapping("/hobbit")
+    fun getByProductId(
+        @RequestParam("id") id: String,
+    ) = service
+       // .getMine()
+      //  .getByItemId(UUID.fromString("2a19d5e4-424b-4133-9f7f-4d026ed4a9d5"))
+        .getByProductAndOwner(UUID.fromString(id))
+
+    @CrossOrigin
     @GetMapping("/owner")
     fun getByOwner(
         @RequestParam("owner") owner: String
@@ -42,12 +49,15 @@ class InventoryItemController(val service: InventoryItemService) {
     fun saveItem(@RequestBody item: NewInventoryDto): InventoryItem = service.create(item)
 
     @CrossOrigin
+    @PutMapping
+    fun updateItem(@RequestBody item: UpdateInventoryDto) = service.update(item)
+    @CrossOrigin
     @DeleteMapping("/{id}")
     fun deleteFood(@PathVariable id: UUID) = service.remove(id)
 
-    @CrossOrigin
-    @PutMapping("/{id}")
-    fun changeOwner(@PathVariable id: UUID) = service.changeOwner(id)
-
+//    @CrossOrigin
+//    @PutMapping("/{id}")
+//    fun changeOwner(@PathVariable id: UUID) = service.changeOwner(id)
+//
 
 }

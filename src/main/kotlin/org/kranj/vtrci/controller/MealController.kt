@@ -2,6 +2,7 @@ package org.kranj.vtrci.controller
 
 import org.kranj.vtrci.dtos.FoodDto
 import org.kranj.vtrci.dtos.NewFoodDto
+import org.kranj.vtrci.dtos.NewMealDto
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.model.Meal
 import org.kranj.vtrci.service.MealService
@@ -24,7 +25,7 @@ class MealController (val service: MealService) {
     @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun saveMeal(@RequestBody meal: Meal) : Meal = service.create(meal)
+    fun saveMeal(@RequestBody meal: NewMealDto) : Meal = service.create(meal)
 
     @CrossOrigin
     @PutMapping("/{id}")

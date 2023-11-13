@@ -15,6 +15,7 @@ class Art(
     @Column(name = "name")
     val name: String,
 
+
     @Column(name="src")
     val src: String,
 

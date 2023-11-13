@@ -128,7 +128,17 @@ data class Food(
     @JoinTable(name="join_meal_food",
     joinColumns=[JoinColumn(name="id_food", referencedColumnName="id")],
     inverseJoinColumns=[JoinColumn(name="id_meal", referencedColumnName="id")])
-    val meals: List<Meal>?
+    val meals: List<Meal>?,
+
+
+
+    @JsonIgnore
+    @OneToMany()
+    @JoinColumn(name = "food")
+//    @JoinTable(name="join_instance_food",
+//    joinColumns=[JoinColumn(name="id_food", referencedColumnName="id")],
+//    inverseJoinColumns=[JoinColumn(name="id_instance", referencedColumnName="id")])
+    val instances: List<FoodInstance>?,
 
     ) {
 //

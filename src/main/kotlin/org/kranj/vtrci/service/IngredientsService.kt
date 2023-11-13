@@ -1,6 +1,7 @@
 package org.kranj.vtrci.service
 
 import org.kranj.vtrci.model.Ingredient
+import org.kranj.vtrci.repository.IngredientInstanceRepository
 
 import org.kranj.vtrci.repository.IngredientsRepository
 import org.springframework.data.domain.Page
@@ -12,7 +13,10 @@ import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
 @Service
-class IngredientsService(val repository: IngredientsRepository) {
+class IngredientsService(
+    val repository: IngredientsRepository,
+    val ingredientInstanceRepository: IngredientInstanceRepository
+    ) {
 
     fun getAll(pageable: Pageable): Page<Ingredient> = repository.findAll(pageable)
 
@@ -22,7 +26,16 @@ class IngredientsService(val repository: IngredientsRepository) {
     fun create(ingredient: Ingredient):Ingredient = repository.save(ingredient)
 
     fun remove(id: UUID) {
-        if (repository.existsById(id)) repository.deleteById(id)
+        if (repository.existsById(id))
+        {
+            val ingredient = repository.getReferenceById(id)
+            if (ingredient.ingInstances?.isNotEmpty() == true){
+                ingredient.ingInstances.forEach {
+                    it.id?.let { it1 -> ingredientInstanceRepository.deleteById(it1) }
+                }
+            }
+            repository.deleteById(id)
+        }
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 

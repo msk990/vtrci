@@ -12,8 +12,8 @@ class Certificate (
 
     val certificateName: String,
 
-    val countryName: String?,
+//    val countryName: String?,
 
-    val certificateNumber: String?,
+    val certificateImage: String?,
         ) {
 }

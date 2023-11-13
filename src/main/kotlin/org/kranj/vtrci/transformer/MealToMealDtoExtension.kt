@@ -15,17 +15,17 @@ fun Meal.toMealDto() : MealDto {
     val ldt = LocalDateTime.ofInstant(this.start, UTC).hour
     var ttl = when(ldt){
         7 -> "breakfast"
-        9 -> "morning snack"
-        11 -> "lunch"
-        14 -> "afternoon snack"
+       // 9 -> "morning snack"
+        10 -> "lunch"
+        13 -> "afternoon snack"
         else -> ldt.toString()
     }
     var endd: Instant = when(ldt){
-        7 -> this.start.plus(2, ChronoUnit.HOURS)
-        9 -> this.start.plus(2, ChronoUnit.HOURS)
-        11 -> this.start.plus(3, ChronoUnit.HOURS)
-        14 -> this.start.plus(2, ChronoUnit.HOURS)
-        else -> this.start.plus(2, ChronoUnit.HOURS)
+        7 -> this.start.plus(3, ChronoUnit.HOURS)
+      //  9 -> this.start.plus(2, ChronoUnit.HOURS)
+        10 -> this.start.plus(3, ChronoUnit.HOURS)
+        13 -> this.start.plus(3, ChronoUnit.HOURS)
+        else -> this.start.plus(3, ChronoUnit.HOURS)
     }
     return MealDto(
         id = this.id,

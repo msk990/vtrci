@@ -1,7 +1,6 @@
 package org.kranj.vtrci.controller
 
 import org.kranj.vtrci.model.Identity
-import org.kranj.vtrci.model.Producer
 import org.kranj.vtrci.service.IdentityService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*

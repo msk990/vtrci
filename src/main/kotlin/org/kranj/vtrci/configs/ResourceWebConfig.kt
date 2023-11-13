@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
-//@Configuration
+@Configuration
 class ResourceWebConfig(val environment: Environment) : WebMvcConfigurer {
 //    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
 //        val location = environment.getProperty("app.file.storage.mapping")

@@ -6,6 +6,7 @@ import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.repository.ArtRepository
 import org.kranj.vtrci.repository.FrontArtRepository
 import org.kranj.vtrci.repository.FoodRepository
+import org.kranj.vtrci.repository.IngredientsRepository
 import org.kranj.vtrci.transformer.AddFoodTransformer
 import org.kranj.vtrci.transformer.FoodPageableTransformer
 import org.kranj.vtrci.transformer.toFood
@@ -20,8 +21,10 @@ import java.util.UUID
 
 @Service
 class FoodService (val repository:FoodRepository,
+                   val ingredientsRepository: IngredientsRepository,
                    private val addFoodTransformer: AddFoodTransformer,
                    val artRepository: ArtRepository,
+                   val ingredientsService: IngredientsService,
                    private val foodPageableTransformer: FoodPageableTransformer
                    ) {
 //    fun getAll(): List<Food> = repository.findAll()
@@ -44,14 +47,21 @@ class FoodService (val repository:FoodRepository,
     fun create(food: NewFoodDto): FoodDto = repository.save(addFoodTransformer.transform(food)).toFoodDto()
 
     fun remove(id: UUID) {
-        if (repository.existsById(id)) repository.deleteById(id)
+        if (repository.existsById(id)) {
+//            val food = repository.getReferenceById(id)
+//            food.ingredients?.forEach{
+//                it.id?.let { it1 -> ingredientsService.remove(it1) }
+//            }
+            repository.deleteById(id)
+        }
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 
     fun update(id:UUID, food: FoodDto): Food {
         return if (repository.existsById(id)) {
             food.id = id
-            repository.save(food.toFood())
+          // ingredientsRepository.deleteFromFoodRelationship(foodId = id)
+            repository.save(food.toFood(repository, ingredientsService))
         } else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 
@@ -95,7 +105,8 @@ class FoodService (val repository:FoodRepository,
             art,
             food.stages,
             food.tag,
-            food.meals
+            food.meals,
+            food.instances
         )
        return repository.save(newFood)
 
@@ -141,7 +152,8 @@ class FoodService (val repository:FoodRepository,
             null,
             food.stages,
             food.tag,
-            food.meals
+            food.meals,
+            food.instances
         )
         return repository.save(newFood)
 

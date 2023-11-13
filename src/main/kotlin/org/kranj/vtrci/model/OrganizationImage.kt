@@ -3,8 +3,8 @@ package org.kranj.vtrci.model
 import jakarta.persistence.*
 import java.util.*
 @Entity
-@Table(name="farms_images")
-data class FarmImage (
+@Table(name="organization_images")
+data class OrganizationImage (
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     var id: UUID?,
