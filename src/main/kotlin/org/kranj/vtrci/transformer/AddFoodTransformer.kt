@@ -63,6 +63,7 @@ class AddFoodTransformer: Transformer<NewFoodDto, Food> {
                 )
             }.toMutableSet(),
             images=source.images?.toMutableSet(),
+            photos = source.photos?.toMutableSet(),
             stages=source.stages?.toMutableSet(),
             art=source.art,
             tag = source.tag?.toSet(),

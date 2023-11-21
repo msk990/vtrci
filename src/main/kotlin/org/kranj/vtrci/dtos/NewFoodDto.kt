@@ -13,6 +13,7 @@ data class NewFoodDto (
     val macroNutrients: MacroNutrients,
     val microNutrients: MicroNutrients,
     val ingredients: MutableSet<IngredientDto>,
+    val photos: MutableSet<FoodPhoto>?,
     val images: MutableSet<FoodImage>?,
     val stages: MutableSet<FoodStage>?,
     val art: Art?,
@@ -29,13 +30,43 @@ data class FoodDto (
     val portionSize: Double,
     val macroNutrients: MacroNutrients,
     val microNutrients: MicroNutrients,
-    val ingredients: MutableSet<Ingredient>?,
+    val ingredients: MutableSet<IngredientForFood>?,
+//    val ingredients: MutableSet<Ingredient>?,
     val images: MutableSet<FoodImage>?,
+    val photos: MutableSet<FoodPhoto>?,
     val stages: MutableSet<FoodStage>?,
     val art: Art?,
     val tag: Set<MealTags>?,
     val meals: Set<Meal>?
 )
+
+data class FoodReturnDto (
+    var id: UUID?,
+    val foodName: String,
+    val foodNameSl: String,
+    val gen: Boolean,
+    val processing: String,
+    val portionSize: Double,
+    val macroNutrients: MacroNutrients,
+    val microNutrients: MicroNutrients,
+//    val ingredients: MutableSet<IngredientForFood>?,
+    val ingredients: MutableSet<Ingredient>?,
+    val images: MutableSet<FoodImage>?,
+    val photos: MutableSet<FoodPhoto>?,
+    val stages: MutableSet<FoodStage>?,
+    val art: Art?,
+    val tag: Set<MealTags>?,
+    val meals: Set<Meal>?
+) {
+
+}
+
+data class IngredientForFood (
+    val id: UUID?,
+    val item: ItemDto,
+    val quantity: Double,
+    val special: Boolean?
+        )
 
 data class IngredientDto (
         val itemId: String,

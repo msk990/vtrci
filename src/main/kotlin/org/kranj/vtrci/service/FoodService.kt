@@ -1,6 +1,7 @@
 package org.kranj.vtrci.service
 
 import org.kranj.vtrci.dtos.FoodDto
+import org.kranj.vtrci.dtos.FoodReturnDto
 import org.kranj.vtrci.dtos.NewFoodDto
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.repository.ArtRepository
@@ -57,7 +58,7 @@ class FoodService (val repository:FoodRepository,
         else throw ResponseStatusException(HttpStatus.NOT_FOUND)
     }
 
-    fun update(id:UUID, food: FoodDto): Food {
+    fun update(id:UUID, food: FoodReturnDto): Food {
         return if (repository.existsById(id)) {
             food.id = id
           // ingredientsRepository.deleteFromFoodRelationship(foodId = id)
@@ -102,6 +103,7 @@ class FoodService (val repository:FoodRepository,
             food.vitaminE,
             food.ingredients,
             food.images,
+            food.photos,
             art,
             food.stages,
             food.tag,
@@ -109,6 +111,7 @@ class FoodService (val repository:FoodRepository,
             food.instances
         )
        return repository.save(newFood)
+       // return newFood
 
     }
 
@@ -149,6 +152,7 @@ class FoodService (val repository:FoodRepository,
             food.vitaminE,
             food.ingredients,
             food.images,
+            food.photos,
             null,
             food.stages,
             food.tag,

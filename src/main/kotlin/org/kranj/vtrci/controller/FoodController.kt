@@ -1,6 +1,7 @@
 package org.kranj.vtrci.controller
 
 import org.kranj.vtrci.dtos.FoodDto
+import org.kranj.vtrci.dtos.FoodReturnDto
 import org.kranj.vtrci.dtos.NewFoodDto
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.service.FoodService
@@ -47,7 +48,7 @@ class FoodController (val service: FoodService) {
 
     @CrossOrigin
     @PutMapping("/{id}")
-    fun updateFood(@PathVariable id: UUID, @RequestBody food:FoodDto) = service.update(id, food)
+    fun updateFood(@PathVariable id: UUID, @RequestBody food: FoodReturnDto) = service.update(id, food)
 
 
 }

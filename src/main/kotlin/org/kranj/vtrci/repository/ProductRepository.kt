@@ -14,7 +14,7 @@ interface ProductRepository : JpaRepository<Product, UUID> {
 
     fun findByProducerIdEquals(orgId: UUID?, pageable: Pageable): Page<Product>
 
-    fun findByProducerIdIs(orgId: UUID?): List<Product>
+    fun findByProducerId(orgId: UUID?): List<Product>
     fun findByTagIdEquals(tag:UUID?, pageable: Pageable): Page<Product>
     fun findByItem_ItemNameContainingIgnoreCaseAndTagIdEquals(itemName: String, tagId: UUID?, pageable: Pageable): Page<Product>
 

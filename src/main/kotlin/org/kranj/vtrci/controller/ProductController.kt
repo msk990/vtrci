@@ -48,6 +48,10 @@ class ProductController(val service: ProductService) {
     fun getItem(@PathVariable id: UUID) = service.getById(id)
 
     @CrossOrigin
+    @GetMapping("/by-producer/{id}")
+    fun getByProducerId(@PathVariable  id: String) = service.getByProducer(id)
+
+    @CrossOrigin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun saveItem(@RequestBody item: NewProductDto): Product = service.create(item)

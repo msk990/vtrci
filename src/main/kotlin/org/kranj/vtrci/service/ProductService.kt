@@ -58,7 +58,7 @@ class ProductService(
 
     fun getByProducer(producerId: String) : List<ProductDto>? {
         val prodId = UUID.fromString(producerId)
-        return productRepository.findByProducerIdIs(prodId).map(Product::toProductDto)
+        return productRepository.findByProducerId(prodId).map(Product::toProductDto)
     }
 
     fun getByItemIdIn(idList: List<UUID>): List<ProductDto> {

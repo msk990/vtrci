@@ -28,13 +28,13 @@ class InventoryItem(
     val product: Product?,
 
     @Column(name = "lot_number")
-    val lotNumber: String,
+    val lotNumber: String?,
 
     @Column(name = "production_date")
-    val productionDate: Instant,
+    val productionDate: Instant?,
 
     @Column(name = "expiration_date")
-    val expirationDate: Instant,
+    val expirationDate: Instant?,
 
 
     @ManyToOne(fetch = FetchType.LAZY)

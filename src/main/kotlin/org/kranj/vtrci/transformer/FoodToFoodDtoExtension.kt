@@ -1,10 +1,7 @@
 package org.kranj.vtrci.transformer
 
 
-import org.kranj.vtrci.dtos.FoodDto
-import org.kranj.vtrci.dtos.FoodForMeal
-import org.kranj.vtrci.dtos.MacroNutrients
-import org.kranj.vtrci.dtos.MicroNutrients
+import org.kranj.vtrci.dtos.*
 import org.kranj.vtrci.model.Food
 import org.kranj.vtrci.repository.FoodRepository
 import org.kranj.vtrci.repository.IngredientsRepository
@@ -15,6 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired
 
 fun Food.toFoodDto() : FoodDto {
 
+    var ingz : MutableSet<IngredientForFood> = mutableSetOf()
+
+    this.ingredients?.forEach {
+        val newIng = it.item?.let { it1 ->
+            IngredientForFood(
+                id = it.id,
+                item = it1.toItemDto(),
+                quantity = it.quantity,
+                special = it.special
+            )
+        }
+        if (newIng != null) {
+            ingz.add(newIng)
+        }
+    }
     return FoodDto(
         id = this.id,
         foodName = this.foodName,
@@ -52,8 +64,9 @@ fun Food.toFoodDto() : FoodDto {
             vitaminD = this.vitaminD,
             vitaminE = this.vitaminE,
         ),
-        ingredients = this?.ingredients?.toMutableSet(),
+        ingredients = ingz,
         images = this?.images?.toMutableSet(),
+        photos = this?.photos?.toMutableSet(),
         stages = this?.stages?.toMutableSet(),
         art = this?.art,
         tag = this.tag?.toSet(),
@@ -63,7 +76,7 @@ fun Food.toFoodDto() : FoodDto {
 
 }
 
-fun FoodDto.toFood(
+fun FoodReturnDto.toFood(
     foodRepository: FoodRepository,
     ingredientsService: IngredientsService,
 
@@ -112,6 +125,7 @@ fun FoodDto.toFood(
         vitaminE = this.microNutrients.vitaminE,
 
         ingredients = this?.ingredients,
+        photos = this?.photos?.toMutableSet(),
         images = this?.images?.toMutableSet(),
         stages = this?.stages?.toMutableSet(),
         art = this?.art,

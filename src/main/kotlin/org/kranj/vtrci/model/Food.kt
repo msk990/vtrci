@@ -110,6 +110,9 @@ data class Food(
     @OneToMany (cascade = [CascadeType.ALL])
     val images: Set<FoodImage>?,
 
+    @ManyToMany (cascade = [CascadeType.ALL])
+    val photos: Set<FoodPhoto>?,
+
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     @JoinTable(name="join_food_art",

@@ -37,5 +37,6 @@ class Product(
     @ManyToMany(cascade = [CascadeType.PERSIST])
     val tag: Set<Tag>?
 
+
     ) {
 }
